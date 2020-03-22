@@ -80,6 +80,7 @@ class GigsController < ApplicationController
   end
 
   def show
+    @categories = Category.all
   end
   
   def upload_photo
