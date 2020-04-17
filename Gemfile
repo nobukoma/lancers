@@ -27,6 +27,7 @@ gem 'stripe', '=4.18.1'
 
 gem 'trestle', '=0.8.12'
 gem 'trestle-auth', '=0.2.5'
+gem 'trestle-tinymce', '=0.1.3'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
