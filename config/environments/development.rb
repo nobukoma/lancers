@@ -61,4 +61,7 @@ Rails.application.configure do
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
   
   config.action_mailer.default_url_options = { protocol: 'https' , host: 'https://40f3cfed96274a1bad2d3a40eebfdf74.vfs.cloud9.ap-northeast-1.amazonaws.com/' }
+
+  config.web_console.whitelisted_ips = '0.0.0.0/0'
+  
 end
