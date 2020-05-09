@@ -1,4 +1,4 @@
-<section class="section">
+<section class="section" data-channel-subscribe="conversation" data-conversation-id="<%= @conversation.id %>" data-user-id="<%= current_user.id %>">
     <div class="columns">
     
         <div class="column is-4">
@@ -7,31 +7,31 @@
                     All Conversations
                 </p>
                 <ul class="menu-list">
-                    <% @conversations.each do |c| %> 
-                      <% @client = c.sender_id == current_user.id ? c.receiver : c.sender %>
+                    <% @conversations.each do |c| %>
+                        <% @client = c.sender_id == current_user.id ? c.receiver : c.sender %>
                         <%= link_to conversation_detail_path(@client.id) do %>
-                          <li>
-                        <article class="message <%= 'is-primary' if c.id == @conversation.id %>">
-                            <div class="message-body">
-                                <div class="media">
-                                    <div class="media-left">
-                                        <figure class="image is-32x32 m-r-5 avatar online">
-                                            <%= image_tag avatar_url(@client), class: "is-rounded" %>
-                                        </figure>
-                                    </div>                                
-                                    <div class="media-content">
-                                        <p class="title is-6"><%= @client.full_name %></p>
-                                        <p class="subtitle is-7">
-                                            <%= (c.last_message.user_id == current_user.id ? "You: #{c.last_message.content}" : c.last_message.content).truncate(20) %>
-                                        </p>
+                            <li>
+                                <article class="message <%= 'is-primary' if c.id == @conversation.id %>">
+                                    <div class="message-body">
+                                        <div class="media">
+                                            <div class="media-left">
+                                                <figure class="image is-32x32 m-r-5 avatar online">
+                                                    <%= image_tag avatar_url(@client), class: "is-rounded" %>
+                                                </figure>
+                                            </div>                                
+                                            <div class="media-content">
+                                                <p class="title is-6"><%= @client.full_name %></p>
+                                                <p class="subtitle is-7">
+                                                    <%= (c.last_message.user_id == current_user.id ? "You: #{c.last_message.content}" : c.last_message.content).truncate(20) %>
+                                                </p>
+                                            </div>
+                                            <div class="media-right">
+                                                <p class="subtitle is-7"><%= c.last_message.updated_at.strftime("%b %Y") %></p>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="media-right">
-                                        <p class="subtitle is-7"><%= c.last_message.updated_at.strftime("%b %Y") %></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </article>                    
-                    </li>
+                                </article>                    
+                            </li>
                         <% end %>
                     <% end %>
                 </ul>
@@ -39,50 +39,31 @@
         </div>
 
         <div class="column is-8">
-          
-          <!-- Receiver Profile -->
-          <article class="media">
-            <div class="media-left">
-              <figure class="image is-64x64">
-                <%= image_tag avatar_url(@user), class: "is-rounded" %>
-              </figure>
-            </div>
-            <div class="media-content">
-              <h3><%= @user.full_name %></h3>
-              <small>From: <%= @user.from %></small>
-              <small>Language: <%= @user.language %></small>
-            </div>
-          </article>
-          <hr>
-          
-          <!-- Messages -->
-          <div class="columns is-multiline">
-            <% @messages.each do |m| %>
-              <% if m.user.id == current_user.id %>
-                <div class="column is-7 is-offset-5">
-                  <p class="notification is-primary conversation-message">
-                    <%= m.content %>
-                  </p>
-                  <span class="subtitle is-7"><%= time_ago_in_words(m.created_at) %></span>
-                </div>
-              <% else %>
-                <div class="column is-7">
-                  <div class="meida-left">
-                    <figure class="image is-32x32">
-                      <%= image_tag avatar_url(m.user), class: "is-rounded" %>
+            
+            <!-- Receiver Profile  -->
+            <article class="media">
+                <div class="media-left">
+                    <figure class="image is-64x64">
+                        <%= image_tag avatar_url(@user), class: "is-rounded" %>
                     </figure>
-                  </div>
-                  <div class="meida-content">
-                    <p class="notification is-primary conversation-message">
-                    <%= m.content %>
-                    </p>
-                    <span class="subtitle is-7"><%= time_ago_in_words(m.created_at) %></span>
-                  </div>
                 </div>
-              <% end %>
-            <% end %>
-          </div>
-          
+                <div class="media-content">
+                    <div class="content">
+                        <h3><%= @user.full_name %></h3>
+                        <small>From: <%= @user.from %></small>
+                        <small>Language: <%= @user.language %></small>
+                    </div>
+                </div>
+            </article>
+            <hr>
+
+            <!-- Messages  -->
+            <div class="columns is-multiline" id="message_list">
+                <% @messages.each do |m| %>
+                    <%= render 'conversations/message', m: m, user: current_user %>
+                <% end %>
+            </div>
+
             <!-- Send Message  -->
             <div class="column m-t-25">
                 <%= form_with model: Message.new, id: "new_message" do |f| %>
@@ -97,7 +78,7 @@
                     </div>
                 <% end %>
             </div>
-          
+
         </div>
     </div>
 </section>
