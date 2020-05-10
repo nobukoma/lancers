@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   get '/users/:id', to: 'users#show', as: 'users'
   get '/selling_orders', to: 'orders#selling_orders'
   get '/buying_orders', to: 'orders#buying_orders'
+  get '/orders/:id', to: 'orders#show', as: 'order_detail'
   get '/all_requests', to: 'requests#list'
   get '/request_offers/:id', to: 'requests#offers', as: 'request_offers'
   get '/my_offers', to: 'requests#my_offers'
@@ -16,6 +17,7 @@ Rails.application.routes.draw do
   get '/earnings', to: 'users#earnings', as: 'earnings'
   get '/conversations', to: 'conversations#list', as: 'conversations'
   get '/conversations/:id', to: 'conversations#show', as: 'conversation_detail'
+
 
   post '/users/edit', to: 'users#update'
   post '/offers', to: 'offers#create'
