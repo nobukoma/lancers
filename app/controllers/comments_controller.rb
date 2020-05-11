@@ -18,6 +18,7 @@ class CommentsController < ApplicationController
             user_id: current_user.id,
             order_id: order.id,
             content: comment_params[:content],
+            attachment_file: comment_params[:attachment_file]
         )
 
         if @comment.save
