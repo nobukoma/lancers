@@ -52,4 +52,8 @@ class PagesController < ApplicationController
                 .page(params[:page])
                 .per(6)
   end
+  
+  def plans
+    @plans = Stripe::Plan.list(product: Rails.application.credentials[Rails.env.to_sym][:stripe][:STRIPE_PRODUCT])
+  end
 end
