@@ -11,6 +11,7 @@ module Lancers
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.0
     config.hosts << ".amazonaws.com"
+    config.hosts << "torimotest01.herokuapp.com"
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
